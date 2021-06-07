@@ -1,4 +1,5 @@
-﻿using EmployeeAPI.Models;
+﻿using AuthenticationPlugin;
+using EmployeeAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,7 +27,7 @@ namespace EmployeeAPI.Controllers
             {
                 Name = user.Name,
                 Email = user.Email,
-                Password = user.Password,
+                Password = SecurePasswordHasherHelper.Hash(user.Password),
                 Role = user.Role
             };
 
