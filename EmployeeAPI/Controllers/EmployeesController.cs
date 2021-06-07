@@ -1,12 +1,6 @@
 ﻿using EmployeeAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeAPI.Controllers
 {
@@ -21,7 +15,6 @@ namespace EmployeeAPI.Controllers
             _dbContext = context;
         }
         
-        // GET: api/<EmployeesController>
         [HttpGet]
         public IActionResult GetEmployees(string sort, int pageNumber, int pageSize)
         {
@@ -99,7 +92,7 @@ namespace EmployeeAPI.Controllers
             return Ok("Employee Record deleted");
         }
 
-
+        //Find api/<EmployeesController>/5
         [HttpGet("[action]")]
         public IActionResult FindEmployee(string employeeName)
         {

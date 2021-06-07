@@ -13,5 +13,7 @@ namespace EmployeeAPI.Models
         {
         }
         public DbSet<Employee> Employeess { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }
