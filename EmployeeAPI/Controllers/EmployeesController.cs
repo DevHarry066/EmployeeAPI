@@ -23,9 +23,32 @@ namespace EmployeeAPI.Controllers
         
         // GET: api/<EmployeesController>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetEmployees(string sort, int pageNumber, int pageSize)
         {
-            return Ok(_dbContext.Employeess);
+            if (pageNumber == 0) pageNumber =pageNumber + 1;
+            if (pageSize == 0) pageSize = 2;
+            var employees = from employee in _dbContext.Employeess
+                        select new
+                        {
+                            Id= employee.Id,
+                            Name=employee.Name,
+                            LastName=employee.LastName,
+                            DateOfJoining=employee.DateOfJoining,
+                            Salary=employee.Salary,
+                            DepartmentName=employee.DepartmentName,
+                            PhoneNumber=employee.PhoneNumber
+
+                        };
+            switch (sort)
+            {
+                case "desc":
+                    return Ok(employees.Skip((pageNumber-1)*pageSize).Take(pageSize).OrderByDescending(m => m.Id)); //Paging and Sorting Concept
+                case "asc":
+                    return Ok(employees.Skip((pageNumber - 1) * pageSize).Take(pageSize).OrderBy(m => m.Id));
+                default:
+                    return Ok(employees.Skip((pageNumber - 1) * pageSize).Take(pageSize));
+
+            }
             //return StatusCode(StatusCodes.Status200OK);
         }
 
@@ -74,6 +97,28 @@ namespace EmployeeAPI.Controllers
             _dbContext.Employeess.Remove(c);
             _dbContext.SaveChanges();
             return Ok("Employee Record deleted");
+        }
+
+
+        [HttpGet("[action]")]
+        public IActionResult FindEmployee(string employeeName)
+        {
+            var employees = from employee in _dbContext.Employeess
+                            where employee.Name.StartsWith(employeeName) //Searching Concept
+                            select new
+                            {
+                                Id = employee.Id,
+                                Name = employee.Name,
+                                LastName = employee.LastName,
+                                DateOfJoining = employee.DateOfJoining,
+                                Salary = employee.Salary,
+                                //DepartmentName = employee.DepartmentName,
+                                PhoneNumber = employee.PhoneNumber
+
+                            };
+
+            return Ok(employees);
+
         }
     }
 }
