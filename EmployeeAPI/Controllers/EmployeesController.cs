@@ -1,10 +1,12 @@
 ﻿using EmployeeAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace EmployeeAPI.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
@@ -54,6 +56,7 @@ namespace EmployeeAPI.Controllers
             return Ok(c);
         }
 
+        [Authorize(Roles ="Admin")]
         // POST api/<EmployeesController>
         [HttpPost]
         public IActionResult Post([FromBody]Employee employee)
@@ -81,6 +84,7 @@ namespace EmployeeAPI.Controllers
             return Ok("Employee Details updated successfully");
         }
 
+        [Authorize(Roles = "Admin")]
         // DELETE api/<EmployeesController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
@@ -92,6 +96,7 @@ namespace EmployeeAPI.Controllers
             return Ok("Employee Record deleted");
         }
 
+        [Authorize(Roles = "User")]
         //Find api/<EmployeesController>/5
         [HttpGet("[action]")]
         public IActionResult FindEmployee(string employeeName)
@@ -111,7 +116,6 @@ namespace EmployeeAPI.Controllers
                             };
 
             return Ok(employees);
-
         }
     }
 }

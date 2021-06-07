@@ -53,7 +53,7 @@ namespace EmployeeAPI.Controllers
             
             if (e == null) return BadRequest("Email not Registred");
 
-            if (!SecurePasswordHasherHelper.Verify(user.Password, e.Password)) return BadRequest("Wrong Password"); //Check Password
+            if (!SecurePasswordHasherHelper.Verify(user.Password, e.Password)) return Unauthorized("Wrong Password"); //Check Password
 
             var claims = new[]
             {
