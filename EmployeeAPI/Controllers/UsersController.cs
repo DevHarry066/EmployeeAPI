@@ -49,11 +49,11 @@ namespace EmployeeAPI.Controllers
         public IActionResult LogIn([FromBody]User user)
         {
             //password = SecurePasswordHasherHelper.Hash(password);
-            var e = _dbContext.Users.Where(u => u.Email == user.Email).SingleOrDefault();
+            var e = _dbContext.Users.Where(u => u.Email == user.Email).SingleOrDefault(); //Check Email
             
             if (e == null) return BadRequest("Email not Registred");
 
-            if (!SecurePasswordHasherHelper.Verify(user.Password, e.Password)) return BadRequest("Wrong Password");
+            if (!SecurePasswordHasherHelper.Verify(user.Password, e.Password)) return BadRequest("Wrong Password"); //Check Password
 
             var claims = new[]
             {
@@ -64,6 +64,7 @@ namespace EmployeeAPI.Controllers
 
             var token = _auth.GenerateAccessToken(claims);
 
+            //return Token
             return new ObjectResult(new
             {
                 access_token = token.AccessToken,
