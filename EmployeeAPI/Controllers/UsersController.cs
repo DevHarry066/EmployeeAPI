@@ -27,7 +27,7 @@ namespace EmployeeAPI.Controllers
             {
                 Name = user.Name,
                 Email = user.Email,
-                Password = SecurePasswordHasherHelper.Hash(user.Password),
+                Password = SecurePasswordHasherHelper.Hash(user.Password), //Change stored procedure of password from string to Hashing
                 Role = user.Role
             };
 
@@ -35,8 +35,6 @@ namespace EmployeeAPI.Controllers
             _dbContext.SaveChanges();
 
             return StatusCode(StatusCodes.Status201Created);
-
-
         }
     }
 }
