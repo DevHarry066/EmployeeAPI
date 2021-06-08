@@ -51,7 +51,7 @@ namespace EmployeeAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var c = _dbContext.Employeess.Find(id);
+            var c = _dbContext.Employeess.Find(id);  //Get Employee with Id
             if (c == null) return NotFound("Employee Not Found");
             return Ok(c);
         }
@@ -61,7 +61,7 @@ namespace EmployeeAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Employee employee)
         {
-            _dbContext.Employeess.Add(employee);
+            _dbContext.Employeess.Add(employee); //Add new Employee details
             _dbContext.SaveChanges();
             return Ok("Employee Details Added");
             //return StatusCode(StatusCodes.Status201Created);
@@ -79,7 +79,7 @@ namespace EmployeeAPI.Controllers
             c.DateOfJoining = employee.DateOfJoining;
             c.Salary = employee.Salary;
             c.DepartmentName = employee.DepartmentName;
-            c.PhoneNumber = employee.PhoneNumber;
+            c.PhoneNumber = employee.PhoneNumber;  //Update Employee details
             _dbContext.SaveChanges();
             return Ok("Employee Details updated successfully");
         }
@@ -91,7 +91,7 @@ namespace EmployeeAPI.Controllers
         {
             var c = _dbContext.Employeess.Find(id);
             if (c == null) return NotFound("Id not found in database");
-            _dbContext.Employeess.Remove(c);
+            _dbContext.Employeess.Remove(c); //Delete Employee
             _dbContext.SaveChanges();
             return Ok("Employee Record deleted");
         }
